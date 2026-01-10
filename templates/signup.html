@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Sign Up | StayHealthy</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="/static/signup.css">
+</head>
+
+<body>
+
+    <div class="container-fluid vh-100">
+        <div class="row h-100">
+
+            <!-- KIRI -->
+            <div class="col-md-6 bg-white d-flex align-items-center justify-content-center">
+                <div class="signup-box text-center">
+
+                    <h2 class="signup-title mb-4">SIGN UP</h2>
+
+                    <form id="stepOneForm">
+                        <input type="email" id="email" class="form-control custom-input mb-3" placeholder="Email">
+                        <input type="password" id="password" class="form-control custom-input mb-3"
+                            placeholder="Password">
+                        <input type="password" id="confirm" class="form-control custom-input mb-4"
+                            placeholder="Konfirmasi Password">
+
+                        <button type="button" id="nextBtn" class="btn btn-next">
+                            Selanjutnya →
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- KANAN -->
+            <div class="col-md-6 welcome-section disabled-section d-flex align-items-center justify-content-center"
+                id="rightSection">
+
+                <div class="text-center text-light">
+
+                    <h1 class="fw-bold mb-4">
+                        MASUKKAN<br>NAMA<br>PENGGUNA
+                    </h1>
+
+                    <input type="text" id="username" class="form-control username-input mb-4" placeholder="Username"
+                        disabled>
+                    <p class="small mb-4">Daftarkan diri anda dan lakukan deteksi dini <br> Cerebral Palsy secara cepat dan mudah</p>
+                    <button class="btn btn-signup" id="signupBtn" disabled href="/templates/login.html">
+                        Sign Up
+                    </button>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- SCRIPT -->
+    <script>
+        document.getElementById("nextBtn").addEventListener("click", function () {
+            const email = document.getElementById("email").value.trim();
+            const password = document.getElementById("password").value.trim();
+            const confirm = document.getElementById("confirm").value.trim();
+
+            if (!email || !password || !confirm) {
+                alert("Semua field wajib diisi");
+                return;
+            }
+
+            if (password !== confirm) {
+                alert("Password dan konfirmasi tidak sama");
+                return;
+            }
+
+            // Aktifkan sisi kanan
+            const rightSection = document.getElementById("rightSection");
+            rightSection.classList.remove("disabled-section");
+            rightSection.classList.add("active-section");
+
+            document.getElementById("username").disabled = false;
+            document.getElementById("signupBtn").disabled = false;
+        });
+    </script>
+
+</body>
+
+</html>
