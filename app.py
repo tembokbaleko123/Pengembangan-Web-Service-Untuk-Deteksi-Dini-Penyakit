@@ -14,7 +14,6 @@ jwt = JWTManager(app)
 
 app.register_blueprint(auth_bp, url_prefix="/api/auth")
 app.register_blueprint(diagnosis_bp)
-app.register_blueprint(user_bp)
 
 with app.app_context():
     db.create_all()
