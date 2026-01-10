@@ -8,3 +8,4 @@ pandas
 openpyxl
 scipy
 packaging
+flask_jwt_extended
