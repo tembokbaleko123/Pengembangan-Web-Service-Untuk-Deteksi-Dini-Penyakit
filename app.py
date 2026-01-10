@@ -3,7 +3,6 @@ from config import Config
 from extensions import db
 from routes.diagnosis import diagnosis_bp
 from routes.auth import auth_bp
-from routes.user import user_bp
 from flask_jwt_extended import JWTManager
 
 app = Flask(__name__)

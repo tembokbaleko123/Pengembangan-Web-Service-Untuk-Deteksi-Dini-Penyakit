@@ -4,12 +4,14 @@ from services.diagnosis_service import diagnose
 from utils.excel_loader import load_gejala
 from models.diagnosis_history import DiagnosisHistory
 from extensions import db
+from utils.log_decorator import log_action
 
 diagnosis_bp = Blueprint("diagnosis", __name__)
 
 
 @diagnosis_bp.route("/api/diagnosis", methods=["POST"])
 @jwt_required()
+@log_action("DIAGNOSIS", "User melakukan diagnosis")
 def diagnosis():
     user_id = get_jwt_identity()   # ambil user dari JWT
     user_input = request.get_json()
@@ -22,7 +24,6 @@ def diagnosis():
     )
 
     db.session.add(history)
-    db.session.commit()
 
     return jsonify(result), 200
 
