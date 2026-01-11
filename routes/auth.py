@@ -18,6 +18,13 @@ def signup_page():
 # =====================
 @auth_bp.route("/login", methods=["GET"])
 def login_page():
+    return render_template("profile/profile.html")
+
+# =====================
+# PROFILE PAGE
+# =====================
+@auth_bp.route("/login", methods=["GET"])
+def profile_page():
     return render_template("auth/login.html")
 
 

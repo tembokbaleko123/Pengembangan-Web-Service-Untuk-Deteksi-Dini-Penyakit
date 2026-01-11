@@ -9,6 +9,28 @@ from utils.log_decorator import log_action
 diagnosis_bp = Blueprint("diagnosis", __name__)
 
 
+# =====================
+# PAGE DIAGNOSIS
+# =====================
+@diagnosis_bp.route("/diagnosa", methods=["GET"])
+def diagnosis_page():
+    df = load_gejala()
+    gejala = df.to_dict(orient="records")
+    return render_template("diagnosa/diagnosa.html", gejala=gejala)
+
+# =====================
+# PAGE HASIL (OUTPUT) - TAMBAHAN BARU
+# =====================
+@diagnosis_bp.route("/diagnosis/hasil", methods=["GET"])
+def result_page():
+    # Halaman ini hanya merender template kosong
+    # Data akan diisi oleh JavaScript dari localStorage
+    return render_template("diagnosa/hasil_diagnosa.html")
+
+
+# =====================
+# API DIAGNOSIS (JWT)
+# =====================
 @diagnosis_bp.route("/api/diagnosis", methods=["POST"])
 @jwt_required()
 @log_action("DIAGNOSIS", "User melakukan diagnosis")

@@ -21,10 +21,10 @@
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav ms-auto me-4 gap-4">
                 <li class="nav-item">
-                    <a class="nav-link active" href="/templates/index.html">Home</a>
+                    <a class="nav-link active" href="{{ url_for('index' ) }}">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/templates/diagnosa/hasil_diagnosa.html">Hasil Diagnosa</a>
+                    <a class="nav-link" href="{{ url_for('diagnosis.result_page' ) }}">Hasil Diagnosa</a>
                 </li>
             </ul>
         </div>
@@ -90,46 +90,72 @@
         </small>
     </footer>
 
-    <script>
-        // DATA DUMMY 
+   <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // 1. Ambil data dari LocalStorage
+        const storedData = localStorage.getItem('hasil_diagnosa');
+
+        if (!storedData) {
+            alert("Data diagnosa tidak ditemukan.");
+            window.location.href = "/diagnosa";
+            return;
+        }
+
+        const result = JSON.parse(storedData);
+        console.log("Data Backend Diterima:", result); // Akan muncul {"P1":36, "P2":0, ...}
+
+        // 2. Pemetaan Data (MENYESUAIKAN KEY P1, P2, P3, P4)
         const dataCP = {
-            spastic: 45,
-            dyskinetic: 25,
-            ataxia: 20,
-            mixed: 10
+            spastic: Math.round(result.P1 || 0),    // Mengambil dari "P1"
+            dyskinetic: Math.round(result.P2 || 0), // Mengambil dari "P2"
+            ataxia: Math.round(result.P3 || 0),     // Mengambil dari "P3"
+            mixed: Math.round(result.P4 || 0)       // Mengambil dari "P4"
         };
 
-        const ctx = document.getElementById('cpChart');
+        // 3. Update Angka di UI (List)
+        // Pastikan ID ini ada di elemen <strong> Anda
+        if(document.getElementById('valP01')) document.getElementById('valP01').innerText = dataCP.spastic + '%';
+        if(document.getElementById('valP02')) document.getElementById('valP02').innerText = dataCP.dyskinetic + '%';
+        if(document.getElementById('valP03')) document.getElementById('valP03').innerText = dataCP.ataxia + '%';
+        if(document.getElementById('valP04')) document.getElementById('valP04').innerText = dataCP.mixed + '%';
 
-        new Chart(ctx, {
-            type: 'pie',
-            data: {
-                labels: ['Spastic', 'Dyskinetic', 'Ataxia', 'Mixed'],
-                datasets: [{
-                    data: [dataCP.spastic, dataCP.dyskinetic, dataCP.ataxia, dataCP.mixed],
-                    backgroundColor: ['#ff6fae', '#ff9fc9', '#ffc1dc', '#ffdbe9']
-                }]
-            },
-            options: {
-                plugins: {
-                    legend: {
-                        position: 'bottom'
-                    },
-                    datalabels: {
-                        color: '#3b2b44',
-                        font: {
-                            weight: 'bold',
-                            size: 14
-                        },
-                        formatter: function (value) {
-                            return value + '%';
+        // Jika Anda menggunakan querySelector (cara alternatif):
+        const listItems = document.querySelectorAll('.list-group-item strong');
+        if(listItems.length >= 4) {
+            listItems[0].innerText = dataCP.spastic + '%';
+            listItems[1].innerText = dataCP.dyskinetic + '%';
+            listItems[2].innerText = dataCP.ataxia + '%';
+            listItems[3].innerText = dataCP.mixed + '%';
+        }
+
+        // 4. Update Grafik Chart.js
+        const ctx = document.getElementById('cpChart');
+        if (ctx) {
+            new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: ['Spastic', 'Dyskinetic', 'Ataxia', 'Mixed'],
+                    datasets: [{
+                        data: [dataCP.spastic, dataCP.dyskinetic, dataCP.ataxia, dataCP.mixed],
+                        backgroundColor: ['#ff6fae', '#ff9fc9', '#ffc1dc', '#ffdbe9']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { position: 'bottom' },
+                        datalabels: {
+                            color: '#3b2b44',
+                            font: { weight: 'bold', size: 14 },
+                            formatter: (value) => value > 0 ? value + '%' : ''
                         }
                     }
-                }
-            },
-            plugins: [ChartDataLabels]
-        });
-    </script>
+                },
+                plugins: [ChartDataLabels]
+            });
+        }
+    });
+</script>
 
 </body>
 
