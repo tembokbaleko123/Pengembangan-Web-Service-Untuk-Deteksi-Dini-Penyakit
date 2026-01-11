@@ -20,11 +20,11 @@
             <div class="login-box text-center">
                 <h2 class="mb-4 login-title">LOG IN</h2>
 
-                <form>
+                <form id="loginForm">
                     <input type="email" class="form-control custom-input mb-3" placeholder="Email" required>
                     <input type="password" class="form-control custom-input mb-4" placeholder="Password" required>
 
-                    <button type="submit" class="btn btn-login" href="/templates/index.html">Log In</button>
+                    <button type="submit" class="btn btn-login">Log In</button>
                 </form>
             </div>
         </div>
@@ -34,12 +34,57 @@
             <div class="text-center text-white">
                 <h1 class="fw-bold mb-3">SELAMAT DATANG<br>DI STAYHEALTHY</h1>
                 <p class="mb-4">Daftarkan diri anda dan lakukan deteksi dini <br> Cerebral Palsy secara cepat dan mudah</p>
-                <a href="/templates/auth/signup.html" class="btn btn-signup">Sign up</a>
+                <a href="{{ url_for('auth.signup_page') }}" class="btn btn-signup">Sign up</a>
             </div>
         </div>
 
     </div>
 </div>
+
+<script>
+document.getElementById("loginForm").addEventListener("submit", async function (e) {
+    e.preventDefault(); // cegah reload halaman
+
+    const email = document.querySelector("input[type='email']").value.trim();
+    const password = document.querySelector("input[type='password']").value.trim();
+
+    if (!email || !password) {
+        alert("Email dan password wajib diisi");
+        return;
+    }
+
+    try {
+        const response = await fetch("/api/auth/login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                email,
+                password
+            })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            alert(data.message || "Login gagal");
+            return;
+        }
+
+        // 🔐 Simpan JWT (localStorage)
+        localStorage.setItem("access_token", data.access_token);
+
+        alert("Login berhasil");
+        window.location.href = "/"; // atau /diagnosis
+
+    } catch (error) {
+        console.error(error);
+        alert("Terjadi kesalahan server");
+    }
+});
+</script>
+
 
 </body>
 </html>

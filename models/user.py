@@ -8,6 +8,10 @@ class User(db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(255), nullable=False)
 
+    username = db.Column(db.String(50), unique=True, nullable=False)
+    image = db.Column(db.String(255), nullable=True)
+
+
     def set_password(self, password):
         self.password = generate_password_hash(password)
 

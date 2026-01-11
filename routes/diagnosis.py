@@ -28,8 +28,4 @@ def diagnosis():
     return jsonify(result), 200
 
 
-@diagnosis_bp.route("/", methods=["GET"])
-def index():
-    df = load_gejala()
-    gejala = df.to_dict(orient="records")
-    return render_template("index.html", gejala=gejala)
+

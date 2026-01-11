@@ -49,8 +49,9 @@
 
                     <input type="text" id="username" class="form-control username-input mb-4" placeholder="Username"
                         disabled>
-                    <p class="small mb-4">Daftarkan diri anda dan lakukan deteksi dini <br> Cerebral Palsy secara cepat dan mudah</p>
-                    <button class="btn btn-signup" id="signupBtn" href="/templates/auth/login.html">
+                    <p class="small mb-4">Daftarkan diri anda dan lakukan deteksi dini <br> Cerebral Palsy secara cepat
+                        dan mudah</p>
+                    <button class="btn btn-signup" id="signupBtn" href="{{ url_for('auth.signup_page') }}">
                         Sign Up
                     </button>
 
@@ -86,6 +87,48 @@
             document.getElementById("signupBtn").disabled = false;
         });
     </script>
+
+    <script>
+        document.getElementById("signupBtn").addEventListener("click", async function () {
+            const email = document.getElementById("email").value.trim();
+            const password = document.getElementById("password").value.trim();
+            const username = document.getElementById("username").value.trim();
+
+            if (!username) {
+                alert("Username wajib diisi");
+                return;
+            }
+
+            try {
+                const response = await fetch("/api/auth/register", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        email,
+                        password,
+                        username
+                    })
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    alert(data.message || "Registrasi gagal");
+                    return;
+                }
+
+                alert("Registrasi berhasil");
+                window.location.href = "/api/auth/login";
+
+            } catch (error) {
+                console.error(error);
+                alert("Terjadi kesalahan server");
+            }
+        });
+    </script>
+
 
 </body>
 

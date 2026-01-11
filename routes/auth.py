@@ -1,10 +1,24 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, render_template
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 from models.user import User
 from extensions import db
 from utils.log_decorator import log_action
 
 auth_bp = Blueprint("auth", __name__)
+
+# =====================
+# SIGNUP PAGE
+# =====================
+@auth_bp.route("/signup", methods=["GET"])
+def signup_page():
+    return render_template("auth/signup.html")
+
+# =====================
+# LOGIN PAGE
+# =====================
+@auth_bp.route("/login", methods=["GET"])
+def login_page():
+    return render_template("auth/login.html")
 
 
 # =====================
@@ -17,20 +31,30 @@ def register():
 
     email = data.get("email")
     password = data.get("password")
+    username = data.get("username")
 
-    if not email or not password:
-        return jsonify({"message": "Email dan password wajib diisi"}), 400
+    if not email or not password or not username:
+        return jsonify({
+            "message": "Email, password, dan username wajib diisi"
+        }), 400
 
     # cek email sudah terdaftar
     if User.query.filter_by(email=email).first():
         return jsonify({"message": "Email sudah terdaftar"}), 409
 
-    user = User(email=email)
+    if User.query.filter_by(username=username).first():
+        return jsonify({"message": "Username sudah digunakan"}), 409
+
+    user = User(
+        email=email,
+        username=username
+    )
     user.set_password(password)
 
     db.session.add(user)
 
     return jsonify({"message": "Registrasi berhasil"}), 201
+
 
 
 
@@ -79,24 +103,34 @@ def get_profile():
 # =====================
 @auth_bp.route("/profile", methods=["PUT"])
 @jwt_required()
-@log_action("UPDATE_PROFILE", "User mengubah data akun")
+@log_action("UPDATE_PROFILE", "User mengubah profil")
 def update_profile():
     user_id = get_jwt_identity()
-    data = request.get_json()
+
+    # kalau pakai form-data (untuk image)
+    email = request.form.get("email")
+    password = request.form.get("password")
+    image = request.files.get("image")
 
     user = User.query.get(user_id)
     if not user:
         return jsonify({"msg": "User tidak ditemukan"}), 404
 
-    # 🔹 Update email
-    if "email" in data:
-        if User.query.filter_by(email=data["email"]).first():
+    # 🔹 update email
+    if email:
+        if User.query.filter(User.email == email, User.id != user.id).first():
             return jsonify({"msg": "Email sudah digunakan"}), 400
-        user.email = data["email"]
+        user.email = email
 
-    # 🔹 Update password
-    if "password" in data:
-        user.set_password(data["password"])
+    # 🔹 update password
+    if password:
+        user.set_password(password)
 
+    # 🔹 update image
+    if image:
+        filename = f"user_{user.id}_{image.filename}"
+        image.save(f"static/uploads/{filename}")
+        user.image = filename
 
-    return jsonify({"msg": "Email atau password berhasil diperbarui"}), 200
+    return jsonify({"msg": "Profil berhasil diperbarui"}), 200
+
