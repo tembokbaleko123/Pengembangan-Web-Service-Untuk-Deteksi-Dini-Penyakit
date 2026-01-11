@@ -1,0 +1,252 @@
+/* =====================
+   GLOBAL
+===================== */
+body {
+    background-color: #f7efec;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+}
+
+/* =====================
+   NAVBAR
+===================== */
+.custom-navbar,
+.navbar-custom {
+    background-color: #5a3f4d;
+}
+
+.navbar-custom .nav-link {
+    color: #ffffff;
+    font-weight: 600;
+}
+
+.navbar-custom .nav-link:hover {
+    color: #ffd6e7;
+}
+
+/* Logo */
+.logo-img {
+    height: 50px;
+    width: auto;
+    padding-left: 20px;
+}
+
+.logo {
+    width: 100px;
+    height: 50px;
+    object-fit: contain;
+    margin-right: 10px;
+}
+
+.brand-text {
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 18px;
+}
+
+/* Login Button */
+.btn-login {
+    background-color: #fde7cc;
+    color: #5a3f4d;
+    border-radius: 20px;
+    font-weight: 600;
+    padding: 6px 18px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
+}
+
+.btn-login:hover {
+    background-color: #fbd3a3;
+    transform: translateY(-2px);
+}
+
+/* =====================
+   HEADER / STRIP
+===================== */
+.hero-strip,
+.header-pink {
+    height: 40px;
+    background-color: #f770a6;
+}
+
+/* =====================
+   HERO SECTION
+===================== */
+.hero-section {
+    background-color: #f7efec;
+    padding: 60px 0;
+}
+
+.hero-img {
+    height: 300px;
+    width: auto;
+}
+
+.hero-title {
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.hero-desc {
+    font-size: 16px;
+    margin-bottom: 25px;
+}
+
+/* CTA Diagnosa */
+.btn-diagnosa {
+    background: linear-gradient(135deg, #ff7eb3, #ff5fa2);
+    color: #fff;
+    padding: 14px 36px;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 30px;
+    box-shadow: 0 10px 25px rgba(255, 95, 162, 0.35);
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-diagnosa:hover {
+    background: linear-gradient(135deg, #ff5fa2, #ff3b90);
+    transform: translateY(-2px);
+    box-shadow: 0 14px 30px rgba(255, 95, 162, 0.45);
+    color: #fff;
+}
+
+/* =====================
+   PETUNJUK
+===================== */
+.petunjuk-section {
+    background-color: #ffffff;
+    padding: 70px 0;
+}
+
+.petunjuk-card {
+    background-color: #fde7cc;
+    border-radius: 12px;
+    border: none;
+}
+
+/* =====================
+   QUESTION SECTION
+===================== */
+.question-box {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #f3a1bf;
+}
+
+.question-title {
+    font-weight: 600;
+    color: #3d2c2c;
+    margin-bottom: 4px;
+}
+
+/* =====================
+   BUTTONS
+===================== */
+.btn-answer {
+    background-color: #ff6ea9;
+    color: #ffffff;
+    border-radius: 6px;
+    padding: 6px 22px;
+    font-weight: 500;
+    border: none;
+}
+
+.btn-answer:hover {
+    background-color: #ff4f96;
+    color: #ffffff;
+}
+
+.btn-next {
+    background-color: #ff6ea9;
+    color: #ffffff;
+    border-radius: 8px;
+    padding: 8px 24px;
+    font-weight: 600;
+}
+
+.btn-next:hover {
+    background-color: #ff4f96;
+}
+
+/* =====================
+   RANGE SLIDER
+===================== */
+.form-range,
+.custom-range {
+    height: 8px;
+    border-radius: 10px;
+    background: #e0e0e0;
+}
+
+.form-range::-webkit-slider-runnable-track,
+.custom-range::-webkit-slider-runnable-track {
+    background-color: #f9faf7;
+    height: 6px;
+    border-radius: 10px;
+}
+
+.form-range::-moz-range-track {
+    background-color: #ffffff;
+    height: 6px;
+    border-radius: 10px;
+}
+
+.form-range::-webkit-slider-thumb,
+.custom-range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    background: #ff6ea9;
+    border-radius: 50%;
+    border: 2px solid #ff6ea9;
+    margin-top: -6px;
+    cursor: pointer;
+}
+
+.form-range::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    background-color: #ff6ea9;
+    border-radius: 50%;
+    border: 2px solid #ff6ea9;
+}
+
+/* =====================
+   INFORMASI & CARD
+===================== */
+.informasi-section {
+    padding: 60px 0;
+}
+
+.card {
+    border-radius: 15px;
+}
+
+.result-title {
+    font-weight: bold;
+    color: #3b2b44;
+}
+
+.chart-wrapper {
+    width: 280px;
+    max-width: 280px;
+    height: 300px;
+    margin: 0 auto;
+}
+
+/* =====================
+   FOOTER
+===================== */
+.footer,
+footer {
+    background-color: #f770a6;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    font-size: 12px;
+}

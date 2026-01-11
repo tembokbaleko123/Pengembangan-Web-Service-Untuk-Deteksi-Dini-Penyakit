@@ -1,103 +1,135 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
-    <title>Sistem Pakar Cerebral Palsy</title>
-    <link rel="stylesheet" href="/static/style.css">
+    <title>StayHealthy</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="/static/css/style.css">
 </head>
+
 <body>
 
-<div class="container">
-    <h2>Sistem Pakar Diagnosis Cerebral Palsy</h2>
-    <p>Pilih gejala dan tingkat keyakinan Anda</p>
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-dark custom-navbar px-4">
+        <a class="navbar-brand fw-bold" href="#">
+            <img src="/static/asset/img/pws.png" alt="StayHealthy" class="logo-img">
+        </a>
 
-    <form id="diagnosisForm">
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav ms-auto me-4 gap-4">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/templates/diagnosa/hasil_diagnosa.html">Hasil Diagnosa</a>
+                </li>
+            </ul>
+        </div>
 
-    {% for g in gejala %}
-    <div class="gejala">
-        <label>
-            <input type="checkbox" data-kode="{{ g.Kode }}">
-            {{ g['Nama Gejala'] }}
-        </label>
+        <a href="/templates/auth/login.html" class="btn btn-login px-4">Login</a>
+    </nav>
 
-        <input type="range"
-               min="0" max="1" step="0.1"
-               value="0" disabled>
+    <!-- HERO SECTION -->
+    <section class="hero-wrapper">
+        <div class="hero-strip"></div>
+        <div class="hero-section">
+            <div class="container">
+                <div class="row align-items-center">
 
-        <span class="nilai">0</span>
-    </div>
-    {% endfor %}
+                    <!-- TEXT -->
+                    <div class="col-md-6">
+                        <h1 class="hero-title">
+                            Sistem Deteksi Dini <br> Cerebral Palsy
+                        </h1>
+                        <p class="hero-desc">
+                            Sistem ini membantu mengenali kemungkinan Cerebral Palsy secara dini berdasarkan gejala yang dialami.
+                        </p>
+                        <a href="/templates/diagnosa/diagnosa.html" class="btn btn-diagnosa">
+                            Mulai Diagnosa
+                        </a>
+                    </div>
 
-    <button type="submit">Proses Diagnosis</button>
-</form>
+                    <!-- IMAGE -->
+                    <div class="col-md-6 text-center">
+                        <img src="/static/asset/img/gambar2.png" class="img-fluid hero-img" alt="Medical">
+                    </div>
 
+                </div>
+            </div>
+    </section>
 
-    <div id="hasil" class="hasil"></div>
-</div>
+    <!-- PETUNJUK -->
+    <section class="petunjuk-section">
+        <div class="container">
+            <h2 class="text-center fw-bold mb-5">
+                Petunjuk Penggunaan Web Service Deteksi Dini Penyakit
+            </h2>
 
-<script>
-document.querySelectorAll('.gejala').forEach(item => {
-    const checkbox = item.querySelector('input[type="checkbox"]');
-    const slider = item.querySelector('input[type="range"]');
-    const nilai = item.querySelector('.nilai');
+            <div class="row align-items-center">
+                <div class="col-md-5 text-center mb-4">
+                    <img src="/static/asset/img/gambar1.png" class="img-fluid" width="300">
+                </div>
 
-    // Default aman
-    slider.disabled = true;
-    slider.value = 0;
-    nilai.textContent = "0";
+                <div class="col-md-7">
+                    <div class="card petunjuk-card mb-3">
+                        <div class="card-body">
+                            <h5 class="fw-bold">Daftar Akun (Melakukan Register)</h5>
+                            <p class="mb-0">
+                                Jika belum mempunyai akun untuk melakukan proses diagnosa,
+                                segera daftar akun melalui halaman daftar akun.
+                            </p>
+                        </div>
+                    </div>
 
-    checkbox.addEventListener('change', () => {
-        if (checkbox.checked) {
-            slider.disabled = false;
-        } else {
-            slider.disabled = true;
-            slider.value = 0;
-            nilai.textContent = "0";
-        }
-    });
+                    <div class="card petunjuk-card mb-3">
+                        <div class="card-body">
+                            <h5 class="fw-bold">Mulai Diagnosa</h5>
+                            <p class="mb-0">
+                                Setelah melakukan pendaftaran akun mulai diagnosa
+                                dengan akun yang sudah didaftarkan.
+                            </p>
+                        </div>
+                    </div>
 
-    slider.addEventListener('input', () => {
-        nilai.textContent = slider.value;
-    });
-});
+                    <div class="card petunjuk-card">
+                        <div class="card-body">
+                            <h5 class="fw-bold">Hasil Diagnosa</h5>
+                            <p class="mb-0">
+                                Setelah melakukan diagnosa akan didapatkan hasil
+                                diagnosa yang diinginkan.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-document.getElementById("diagnosisForm").addEventListener("submit", async function(e) {
-    e.preventDefault();
+    <!-- INFORMASI -->
+    <section class="informasi-section" id="hasil">
+        <div class="container text-center">
+            <h2 class="fw-bold mb-3">Informasi</h2>
+            <p>
+                Website ini dikembangkan sebagai layanan web service yang berfungsi
+                untuk mendukung deteksi dini penyakit secara cepat dan akurat
+                melalui pemanfaatan teknologi digital.
+            </p>
+        </div>
+    </section>
 
-    let data = {};
-
-    document.querySelectorAll('.gejala').forEach(item => {
-        const checkbox = item.querySelector('input[type="checkbox"]');
-        const slider = item.querySelector('input[type="range"]');
-
-        if (checkbox.checked && parseFloat(slider.value) > 0) {
-            data[checkbox.dataset.kode] = parseFloat(slider.value);
-        }
-    });
-
-    // Guard: tidak ada gejala dipilih
-    if (Object.keys(data).length === 0) {
-        alert("Silakan pilih minimal satu gejala.");
-        return;
-    }
-
-    const response = await fetch("/diagnosis", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data)
-    });
-
-    const result = await response.json();
-
-    let output = "<h3>Hasil Diagnosis</h3>";
-    for (let key in result) {
-        output += `<p>${key}: <strong>${result[key]}%</strong></p>`;
-    }
-
-    document.getElementById("hasil").innerHTML = output;
-});
-</script>
-
+    <!-- FOOTER -->
+    <footer class="footer text-center">
+        <small>
+            Copyright © 2026 StayHealthy. All rights reserved.<br>
+            Terms of Use | Privacy Policy | Cookie Policy
+        </small>
+    </footer>
 
 </body>
+
 </html>
