@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify, render_template
+from flask import Blueprint, request, jsonify, render_template, session, url_for, redirect
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 from models.user import User
 from extensions import db
@@ -13,19 +13,15 @@ auth_bp = Blueprint("auth", __name__)
 def signup_page():
     return render_template("auth/signup.html")
 
-# =====================
 # LOGIN PAGE
-# =====================
 @auth_bp.route("/login", methods=["GET"])
 def login_page():
-    return render_template("profile/profile.html")
-
-# =====================
-# PROFILE PAGE
-# =====================
-@auth_bp.route("/login", methods=["GET"])
-def profile_page():
     return render_template("auth/login.html")
+
+# PROFILE PAGE
+@auth_bp.route("/profile-page", methods=["GET"])
+def profile_page():
+    return render_template("profile/profile.html")
 
 
 # =====================
@@ -62,8 +58,13 @@ def register():
 
     return jsonify({"message": "Registrasi berhasil"}), 201
 
-
-
+# =====================
+# LOGOUT
+# =====================
+@auth_bp.route("/logout", methods=["GET"])
+def logout():
+    session.clear()
+    return redirect(url_for('index'))
 
 
 # =====================
@@ -73,16 +74,21 @@ def register():
 @log_action("LOGIN", "User melakukan login", use_jwt=False)
 def login():
     data = request.get_json()
-
     user = User.query.filter_by(email=data.get("email")).first()
 
     if user and user.check_password(data.get("password")):
         token = create_access_token(identity=str(user.id))
+
+        # 🔹 SIMPAN SESSION (INI KUNCI)
+        session['user_id'] = user.id
+        session['username'] = user.username
+        session['profile_pic'] = (
+    f"uploads/{user.image}" if user.image else "asset/img/dummy-pic.png"
+)
+        
         return jsonify(access_token=token), 200
 
     return jsonify({"message": "Email atau password salah"}), 401
-
-
 
 
 # =====================
@@ -93,17 +99,18 @@ def login():
 @log_action("VIEW_PROFILE", "User melihat profil")
 def get_profile():
     user_id = get_jwt_identity()
-
     user = User.query.get(user_id)
+    
     if not user:
         return jsonify({"message": "User tidak ditemukan"}), 404
 
+    # Pastikan path image sesuai dengan folder uploads Anda
+    pic_path = f"uploads/{user.image}" if user.image else "asset/img/dummy-pic.png"
+
     return jsonify({
-        "id": user.id,
-        "email": user.email
+        "email": user.email, 
+        "profile_pic": pic_path # Sesuaikan path agar bisa dibaca frontend
     }), 200
-
-
 
 # =====================
 # UPDATE PROFILE
@@ -140,4 +147,3 @@ def update_profile():
         user.image = filename
 
     return jsonify({"msg": "Profil berhasil diperbarui"}), 200
-

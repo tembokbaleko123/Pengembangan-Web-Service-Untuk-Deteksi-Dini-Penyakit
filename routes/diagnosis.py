@@ -48,6 +48,3 @@ def diagnosis():
     db.session.add(history)
 
     return jsonify(result), 200
-
-
-
