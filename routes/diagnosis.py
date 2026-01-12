@@ -5,6 +5,7 @@ from utils.excel_loader import load_gejala
 from models.diagnosis_history import DiagnosisHistory
 from extensions import db
 from utils.log_decorator import log_action
+from datetime import timedelta
 
 diagnosis_bp = Blueprint("diagnosis", __name__)
 
@@ -48,3 +49,30 @@ def diagnosis():
     db.session.add(history)
 
     return jsonify(result), 200
+
+# Mapping kode ke nama penyakit asli
+MAPPING_PENYAKIT = {
+    "P1": "Spastic",
+    "P2": "Dyskientic",
+    "P3": "Ataxia",
+    "P4": "Mixed",
+}
+
+@diagnosis_bp.route("/api/diagnosis/history", methods=["GET"])
+@jwt_required()
+def diagnosis_history_api():
+    user_id = get_jwt_identity()
+    histories = DiagnosisHistory.query.filter_by(user_id=user_id).order_by(DiagnosisHistory.created_at.desc()).all()
+
+    # Karena di DB tersimpan 2026-01-11 18:11:36 (UTC)
+    # Kita tambahkan 7 jam agar menjadi Waktu Indonesia Barat (WIB)
+    wib_offset = timedelta(hours=7)
+
+    return jsonify([
+        {
+            "hasil": h.hasil,
+            # Format: 11 Jan 2026 18:11
+            "tanggal": (h.created_at + wib_offset).strftime("%d %b %Y %H:%M")
+        }
+        for h in histories
+    ])
