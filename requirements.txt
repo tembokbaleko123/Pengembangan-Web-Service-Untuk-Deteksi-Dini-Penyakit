@@ -1,0 +1,11 @@
+flask
+flask-sqlalchemy
+sqlalchemy
+pymysql
+numpy
+scikit-fuzzy
+pandas
+openpyxl
+scipy
+packaging
+flask_jwt_extended

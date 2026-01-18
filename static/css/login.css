@@ -1,0 +1,58 @@
+:root {
+    --pink: #f76aa7;
+    --dark-text: #5b3a4a;
+}
+
+.login-box {
+    width: 100%;
+    max-width: 380px;
+}
+
+.login-title {
+    color: var(--dark-text);
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.custom-input {
+    background-color: #e5e5e5;
+    border: none;
+    border-radius: 30px;
+    padding: 12px 20px;
+    font-size: 15px;
+}
+
+.custom-input:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+.btn-login {
+    background-color: var(--pink);
+    color: #fff;
+    border-radius: 30px;
+    padding: 10px 40px;
+    font-weight: 600;
+    border: none;
+}
+
+.btn-login:hover {
+    background-color: #f55398;
+}
+
+.welcome-section {
+    background-color: var(--pink);
+}
+
+.btn-signup {
+    border: 2px solid #fff;
+    color: #fff;
+    border-radius: 30px;
+    padding: 10px 35px;
+    font-weight: 600;
+}
+
+.btn-signup:hover {
+    background-color: #fff;
+    color: var(--pink);
+}
