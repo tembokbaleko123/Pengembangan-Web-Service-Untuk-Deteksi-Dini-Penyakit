@@ -20,11 +20,19 @@
             <div class="login-box text-center">
                 <h2 class="mb-4 login-title">LOG IN</h2>
 
+<<<<<<< HEAD
                 <form id="loginForm">
                     <input type="email" class="form-control custom-input mb-3" placeholder="Email" required>
                     <input type="password" class="form-control custom-input mb-4" placeholder="Password" required>
 
                     <button type="submit" class="btn btn-login">Log In</button>
+=======
+                <form>
+                    <input type="email" class="form-control custom-input mb-3" placeholder="Email" required>
+                    <input type="password" class="form-control custom-input mb-4" placeholder="Password" required>
+
+                    <button type="submit" class="btn btn-login" href="/templates/index.html">Log In</button>
+>>>>>>> origin/FrontEnd_v1
                 </form>
             </div>
         </div>
@@ -34,13 +42,18 @@
             <div class="text-center text-white">
                 <h1 class="fw-bold mb-3">SELAMAT DATANG<br>DI STAYHEALTHY</h1>
                 <p class="mb-4">Daftarkan diri anda dan lakukan deteksi dini <br> Cerebral Palsy secara cepat dan mudah</p>
+<<<<<<< HEAD
                 <a href="{{ url_for('auth.signup_page') }}" class="btn btn-signup">Sign up</a>
+=======
+                <a href="/templates/auth/signup.html" class="btn btn-signup">Sign up</a>
+>>>>>>> origin/FrontEnd_v1
             </div>
         </div>
 
     </div>
 </div>
 
+<<<<<<< HEAD
 <script>
 document.getElementById("loginForm").addEventListener("submit", async function (e) {
     e.preventDefault(); // cegah reload halaman
@@ -86,5 +99,7 @@ document.getElementById("loginForm").addEventListener("submit", async function (
 </script>
 
 
+=======
+>>>>>>> origin/FrontEnd_v1
 </body>
 </html>
