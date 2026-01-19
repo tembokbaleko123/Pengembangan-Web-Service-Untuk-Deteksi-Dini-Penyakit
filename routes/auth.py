@@ -23,6 +23,13 @@ def login_page():
 def profile_page():
     return render_template("profile/profile.html")
 
+@auth_bp.route("/profile/edit", methods=["GET"])
+def edit_profile_page():
+    if "user_id" not in session:
+        return redirect(url_for("auth.login_page"))
+
+    user = User.query.get_or_404(session["user_id"])
+    return render_template("profile/edit_profile.html", user=user)
 
 # =====================
 # REGISTER
@@ -145,5 +152,7 @@ def update_profile():
         filename = f"user_{user.id}_{image.filename}"
         image.save(f"static/uploads/{filename}")
         user.image = filename
+        # Perbarui session agar Navbar langsung berubah tanpa relogin
+        session['profile_pic'] = f"uploads/{filename}"
 
     return jsonify({"msg": "Profil berhasil diperbarui"}), 200

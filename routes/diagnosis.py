@@ -1,10 +1,11 @@
-from flask import Blueprint, request, jsonify, render_template
+from flask import Blueprint, request, jsonify, render_template, session, redirect, url_for, flash
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from services.diagnosis_service import diagnose
 from utils.excel_loader import load_gejala
 from models.diagnosis_history import DiagnosisHistory
 from extensions import db
 from utils.log_decorator import log_action
+from datetime import timedelta
 
 diagnosis_bp = Blueprint("diagnosis", __name__)
 
@@ -14,9 +15,14 @@ diagnosis_bp = Blueprint("diagnosis", __name__)
 # =====================
 @diagnosis_bp.route("/diagnosa", methods=["GET"])
 def diagnosis_page():
+    if 'user_id' not in session:
+        flash("Silakan login terlebih dahulu untuk memulai diagnosa", "warning")
+        return redirect(url_for("auth.login_page"))
+
     df = load_gejala()
     gejala = df.to_dict(orient="records")
     return render_template("diagnosa/diagnosa.html", gejala=gejala)
+
 
 # =====================
 # PAGE HASIL (OUTPUT) - TAMBAHAN BARU
@@ -48,3 +54,30 @@ def diagnosis():
     db.session.add(history)
 
     return jsonify(result), 200
+
+# Mapping kode ke nama penyakit asli
+MAPPING_PENYAKIT = {
+    "P1": "Spastic",
+    "P2": "Dyskinetic",
+    "P3": "Ataxia",
+    "P4": "Mixed",
+}
+
+@diagnosis_bp.route("/api/diagnosis/history", methods=["GET"])
+@jwt_required()
+def diagnosis_history_api():
+    user_id = get_jwt_identity()
+    histories = DiagnosisHistory.query.filter_by(user_id=user_id).order_by(DiagnosisHistory.created_at.desc()).all()
+
+    # Karena di DB tersimpan 2026-01-11 18:11:36 (UTC)
+    # Kita tambahkan 7 jam agar menjadi Waktu Indonesia Barat (WIB)
+    wib_offset = timedelta(hours=7)
+
+    return jsonify([
+        {
+            "hasil": h.hasil,
+            # Format: 11 Jan 2026 18:11
+            "tanggal": (h.created_at + wib_offset).strftime("%d %b %Y %H:%M")
+        }
+        for h in histories
+    ])
