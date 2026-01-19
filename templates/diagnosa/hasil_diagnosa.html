@@ -12,21 +12,6 @@
 
 <body>
 
-<<<<<<< HEAD
-    <!-- NAVBAR -->
-    <nav class="navbar navbar-expand-lg navbar-dark custom-navbar px-4">
-        <a class="navbar-brand fw-bold" href="#">
-            <img src="/static/asset/img/pws.png" alt="StayHealthy" class="logo-img">
-        </a>
-
-        <div class="collapse navbar-collapse">
-            <ul class="navbar-nav ms-auto me-4 gap-4">
-                <li class="nav-item">
-                    <a class="nav-link active" href="{{ url_for('index' ) }}">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('diagnosis.result_page' ) }}">Hasil Diagnosa</a>
-=======
     <nav class="navbar navbar-expand-lg navbar-dark custom-navbar px-4">
         <a class="navbar-brand fw-bold" href="/">
             <img src="/static/asset/img/pws.png" alt="StayHealthy" class="logo-img">
@@ -35,7 +20,6 @@
             <ul class="navbar-nav ms-auto me-4 gap-4">
                 <li class="nav-item">
                     <a class="nav-link active" href="/">Home</a>
->>>>>>> origin/BackEnd_v2
                 </li>
             </ul>
         </div>
@@ -43,25 +27,6 @@
 
     <div class="hero-strip"></div>
 
-<<<<<<< HEAD
-    <!-- CONTENT -->
-    <div class="container my-5">
-        <div class="row">
-            <!-- KIRI -->
-            <div class="col-md-7">
-                <div class="card shadow p-4">
-                    <h4 class="result-title mb-3 text-center">Hasil Diagnosa Cerebral Palsy</h4>
-                    <div class="chart-wrapper d-flex justify-content-center">
-                        <canvas id="cpChart"></canvas>
-                    </div>
-                    <hr>
-                    <h5 class="mt-3">Persentase Tipe Cerebral Palsy</h5>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">Spastic: <strong>45%</strong></li>
-                        <li class="list-group-item">Dyskinetic: <strong>25%</strong></li>
-                        <li class="list-group-item">Ataxia: <strong>20%</strong></li>
-                        <li class="list-group-item">Mixed: <strong>10%</strong></li>
-=======
     <div class="container my-5">
         <div class="row">
             <div class="col-md-7">
@@ -85,51 +50,34 @@
                         <li class="list-group-item d-flex justify-content-between">
                             <span>Mixed CP (Campuran)</span> <strong id="valP04">0%</strong>
                         </li>
->>>>>>> origin/BackEnd_v2
                     </ul>
                 </div>
             </div>
 
-
-            <!-- KANAN -->
-            <div class="col-md-5">
-                <div class="p-4 h-100">
-                    <h5 class="result-title">Tentang Cerebral Palsy</h5>
-                    <p>
-                        Cerebral Palsy adalah gangguan perkembangan gerak dan postur tubuh yang disebabkan oleh
-                        kerusakan pada otak yang terjadi sejak masa perkembangan awal.
+            <div class="col-md-5 mt-4 mt-md-0">
+                <div class="card shadow p-4 h-100 border-0" style="background-color: #fdfdfd;">
+                    
+                    <h4 class="text-primary fw-bold mb-3" id="infoTitle">Memuat Hasil...</h4>
+                    
+                    <h6 class="text-uppercase text-muted small fw-bold">Apa itu?</h6>
+                    <p id="infoDesc" class="mb-4">
+                        Sedang menganalisa data diagnosa Anda...
                     </p>
 
+                    <h6 class="text-uppercase text-muted small fw-bold">Saran & Solusi Sementara</h6>
+                    <div id="infoAdvice">
+                        </div>
 
-                    <h6 class="mt-3">Saran</h6>
-                    <p id="medicalAdvice">
-                        Berdasarkan hasil diagnosa, disarankan untuk melakukan pemantauan lebih lanjut dan berkonsultasi
-                        dengan tenaga medis apabila gejala semakin memburuk.
-                    </p>
-
-
-                    <div class="alert alert-warning mt-3" id="warningBox" style="display:none;">
-                        <strong>Perhatian:</strong> Tingkat kemungkinan tinggi. Segera konsultasikan ke dokter spesialis
-                        saraf atau rehabilitasi medik.
+                    <div class="alert alert-warning mt-4 d-flex align-items-start" role="alert">
+                        <span class="me-2 fs-4">⚠️</span>
+                        <div>
+                            <strong>Penting:</strong> Hasil ini adalah prediksi awal sistem pakar. Diagnosa medis pasti harus dilakukan oleh Dokter Spesialis Saraf Anak atau Rehabilitasi Medik.
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-<<<<<<< HEAD
-    </div>
-    </div>
-
-    <!-- FOOTER -->
-    <footer class="footer text-center">
-        <small>
-            Copyright © 2026 StayHealthy. All rights reserved.<br>
-            Terms of Use | Privacy Policy | Cookie Policy
-        </small>
-    </footer>
-
-   <script>
-=======
 
     <footer class="footer text-center mt-5 py-4 border-top">
         <small class="text-muted">
@@ -138,61 +86,17 @@
     </footer>
 
     <script>
->>>>>>> origin/BackEnd_v2
     document.addEventListener("DOMContentLoaded", function () {
         // 1. Ambil data dari LocalStorage
         const storedData = localStorage.getItem('hasil_diagnosa');
 
         if (!storedData) {
-<<<<<<< HEAD
-            alert("Data diagnosa tidak ditemukan.");
-            window.location.href = "/diagnosa";
-=======
             alert("Data diagnosa tidak ditemukan. Anda akan diarahkan kembali.");
             window.location.href = "/diagnosa"; // Sesuaikan URL diagnosa Anda
->>>>>>> origin/BackEnd_v2
             return;
         }
 
         const result = JSON.parse(storedData);
-<<<<<<< HEAD
-        console.log("Data Backend Diterima:", result); // Akan muncul {"P1":36, "P2":0, ...}
-
-        // 2. Pemetaan Data (MENYESUAIKAN KEY P1, P2, P3, P4)
-        const dataCP = {
-            spastic: Math.round(result.P1 || 0),    // Mengambil dari "P1"
-            dyskinetic: Math.round(result.P2 || 0), // Mengambil dari "P2"
-            ataxia: Math.round(result.P3 || 0),     // Mengambil dari "P3"
-            mixed: Math.round(result.P4 || 0)       // Mengambil dari "P4"
-        };
-
-        // 3. Update Angka di UI (List)
-        // Pastikan ID ini ada di elemen <strong> Anda
-        if(document.getElementById('valP01')) document.getElementById('valP01').innerText = dataCP.spastic + '%';
-        if(document.getElementById('valP02')) document.getElementById('valP02').innerText = dataCP.dyskinetic + '%';
-        if(document.getElementById('valP03')) document.getElementById('valP03').innerText = dataCP.ataxia + '%';
-        if(document.getElementById('valP04')) document.getElementById('valP04').innerText = dataCP.mixed + '%';
-
-        // Jika Anda menggunakan querySelector (cara alternatif):
-        const listItems = document.querySelectorAll('.list-group-item strong');
-        if(listItems.length >= 4) {
-            listItems[0].innerText = dataCP.spastic + '%';
-            listItems[1].innerText = dataCP.dyskinetic + '%';
-            listItems[2].innerText = dataCP.ataxia + '%';
-            listItems[3].innerText = dataCP.mixed + '%';
-        }
-
-        // 4. Update Grafik Chart.js
-        const ctx = document.getElementById('cpChart');
-        if (ctx) {
-            new Chart(ctx, {
-                type: 'pie',
-                data: {
-                    labels: ['Spastic', 'Dyskinetic', 'Ataxia', 'Mixed'],
-                    datasets: [{
-                        data: [dataCP.spastic, dataCP.dyskinetic, dataCP.ataxia, dataCP.mixed],
-                        backgroundColor: ['#ff6fae', '#ff9fc9', '#ffc1dc', '#ffdbe9']
-=======
         
         // 2. Format Data ke Angka Bulat
         const dataCP = {
@@ -288,19 +192,10 @@
                         backgroundColor: ['#ff6fae', '#ff9fc9', '#ffc1dc', '#ffdbe9'],
                         borderWidth: 2,
                         borderColor: '#ffffff'
->>>>>>> origin/BackEnd_v2
                     }]
                 },
                 options: {
                     responsive: true,
-<<<<<<< HEAD
-                    plugins: {
-                        legend: { position: 'bottom' },
-                        datalabels: {
-                            color: '#3b2b44',
-                            font: { weight: 'bold', size: 14 },
-                            formatter: (value) => value > 0 ? value + '%' : ''
-=======
                     maintainAspectRatio: false,
                     plugins: {
                         legend: { position: 'bottom', labels: { usePointStyle: true } },
@@ -308,7 +203,6 @@
                             color: '#3b2b44',
                             font: { weight: 'bold', size: 12 },
                             formatter: (value) => value > 5 ? value + '%' : '' // Hanya tampilkan jika > 5%
->>>>>>> origin/BackEnd_v2
                         }
                     }
                 },
@@ -316,14 +210,7 @@
             });
         }
     });
-<<<<<<< HEAD
-</script>
-
-</body>
-
-=======
     </script>
 
 </body>
->>>>>>> origin/BackEnd_v2
 </html>

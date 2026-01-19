@@ -6,30 +6,14 @@
   <title>StayHealthy - Diagnosis</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <!-- Bootstrap -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
 
-  <!-- Custom CSS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
   <link rel="stylesheet" href="/static/css/style.css" />
 </head>
 
 <body>
-<<<<<<< HEAD
-  <!-- ================= NAVBAR ================= -->
-  <nav class="navbar navbar-expand-lg navbar-custom px-4">
-    <a class="navbar-brand d-flex align-items-center" href="#">
-      <img src="/static/asset/img/pws.png" alt="Logo StayHealthy" class="logo" />
-    </a>
-
-    <div class="collapse navbar-collapse justify-content-end">
-      <ul class="navbar-nav me-3">
-        <li class="nav-item"><a class="nav-link" href="{{ url_for('index') }}">Home</a></li>
-        <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('diagnosis.result_page') }}">Hasil Diagnosa</a>
-        </li>
-      </ul>
-      <a href="{{ url_for('auth.profile_page') }}" class="btn btn-login">Login</a>
-=======
   <nav class="navbar navbar-expand-lg navbar-dark custom-navbar px-4">
     <a class="navbar-brand fw-bold" href="{{ url_for('index') }}">
       <img src="/static/asset/img/pws.png" alt="StayHealthy" class="logo-img">
@@ -72,7 +56,6 @@
           </a>
         </li>
       </ul>
->>>>>>> origin/BackEnd_v2
     </div>
   </nav>
 
@@ -80,24 +63,12 @@
 
   <div class="container my-4" id="app"></div>
 
-<<<<<<< HEAD
-  <!-- ================= FOOTER ================= -->
-=======
->>>>>>> origin/BackEnd_v2
   <footer>
     Copyright © 2026 StayHealthy. All rights reserved.<br />
     Terms of Use | Privacy Policy | Cookie Policy
   </footer>
 
-<<<<<<< HEAD
-  <!-- ================= JAVASCRIPT ================= -->
-  <!-- ================= DATASET DARI BACKEND ================= -->
   <script>
-    // Ini Bukan Error... Tetapi kode flask yang tidak bisa terbaca oleh JavaScript
-    // Tetapi ini bisa jalan dengan normal
-=======
-  <script>
->>>>>>> origin/BackEnd_v2
     const pertanyaan = {{ gejala | tojson }};
   </script>
 
@@ -121,30 +92,14 @@
         let nilai = jawaban[no] ?? 0;
         let percent = nilai * 100;
 
-<<<<<<< HEAD
-=======
         // Cek apakah gejala ini sedang dipilih (nilai > 0)
         let isActive = nilai > 0;
 
->>>>>>> origin/BackEnd_v2
         app.innerHTML += `
     <div class="question-box">
       <p class="question-title">Pertanyaan ${no}</p>
       <p>${pertanyaan[i]["Nama Gejala"]}</p>
 
-<<<<<<< HEAD
-      <button class="btn btn-answer me-2" onclick="jawabYa(${no})">Ya</button>
-      <button class="btn btn-answer" onclick="jawabTidak(${no})">Tidak</button>
-
-      <div id="range-${no}" class="mt-3 ${nilai > 0 ? "" : "d-none"}">
-        <input type="range"
-          class="form-range custom-range"
-          min="0" max="1" step="0.1"
-          value="${nilai}"
-          style="background: linear-gradient(to right,#0d6efd ${percent}%,#e0e0e0 ${percent}%)"
-          oninput="updateRange(${no}, this)">
-        <p>Nilai: <span id="nilai-${no}">${nilai}</span></p>
-=======
       <button class="btn ${isActive ? 'btn-secondary' : 'btn-answer'}" onclick="toggleGejala(${no})">
         ${isActive ? 'Batalkan' : 'Ya'}
       </button>
@@ -157,7 +112,6 @@
           style="background: linear-gradient(to right,#0d6efd ${percent}%,#e0e0e0 ${percent}%)"
           oninput="updateRange(${no}, this)">
         <p>Tingkat Keyakinan: <span id="nilai-${no}">${nilai}</span></p>
->>>>>>> origin/BackEnd_v2
       </div>
     </div>`;
       }
@@ -173,16 +127,6 @@
       </div>`;
     }
 
-<<<<<<< HEAD
-    function jawabYa(no) {
-      document.getElementById(`range-${no}`).classList.remove("d-none");
-    }
-
-    function jawabTidak(no) {
-      document.getElementById(`range-${no}`).classList.add("d-none");
-      jawaban[no] = 0;
-      document.getElementById(`nilai-${no}`).innerText = 0;
-=======
     // Fungsi baru untuk menggantikan jawabYa dan jawabTidak
     function toggleGejala(no) {
       let currentVal = jawaban[no] ?? 0;
@@ -198,98 +142,57 @@
       
       // Render ulang untuk memperbarui tampilan tombol (Ya <-> Batal) dan visibility slider
       render();
->>>>>>> origin/BackEnd_v2
     }
 
     function updateRange(no, slider) {
       let percent = slider.value * 100;
       slider.style.background = `linear-gradient(to right,#0d6efd ${percent}%,#e0e0e0 ${percent}%)`;
-<<<<<<< HEAD
-      jawaban[no] = slider.value;
-=======
       jawaban[no] = parseFloat(slider.value);
->>>>>>> origin/BackEnd_v2
       document.getElementById(`nilai-${no}`).innerText = slider.value;
     }
 
     function nextStep() {
       currentStep++;
       render();
-<<<<<<< HEAD
-      window.scrollTo({ top: 0, behavior: "smooth" });
-=======
       window.scrollTo({
         top: 0,
         behavior: "smooth"
       });
->>>>>>> origin/BackEnd_v2
     }
 
     function prevStep() {
       currentStep--;
       render();
-<<<<<<< HEAD
-      window.scrollTo({ top: 0, behavior: "smooth" });
-=======
       window.scrollTo({
         top: 0,
         behavior: "smooth"
       });
->>>>>>> origin/BackEnd_v2
     }
 
     render();
 
     async function kirimDiagnosis() {
       // 1. Siapkan Data
-<<<<<<< HEAD
-      // Kita perlu memetakan jawaban (index) ke Kode Gejala yang dimengerti backend
-      let payload = {};
-
-      pertanyaan.forEach((item, index) => {
-        // index + 1 karena logika 'jawaban' anda dimulai dari 1
-        let no = index + 1;
-        // Ambil nilai, jika tidak ada set 0
-        let nilai = jawaban[no] ? parseFloat(jawaban[no]) : 0.0;
-
-        // Asumsi di Excel ada kolom 'Kode Gejala' (misal: G01, G02)
-        // Jika tidak ada, gunakan item['Nama Gejala'] atau ID lainnya
-        let kode = item['Kode Gejala'] || item['Kode'] || `G${no}`;
-
-=======
       let payload = {};
 
       pertanyaan.forEach((item, index) => {
         let no = index + 1;
         let nilai = jawaban[no] ? parseFloat(jawaban[no]) : 0.0;
         let kode = item['Kode Gejala'] || item['Kode'] || `G${no}`; // Sesuaikan dengan key di DB/Excel
->>>>>>> origin/BackEnd_v2
         payload[kode] = nilai;
       });
 
       try {
-<<<<<<< HEAD
-        // 2. Ambil Token JWT (Asumsi token disimpan di localStorage saat Login)
-        const token = localStorage.getItem('access_token');
-        if (!token) {
-          alert("Anda belum login. Silakan login terlebih dahulu.");
-          window.location.href = "/templates/profile/profile.html"; // Redirect ke login
-=======
         // 2. Ambil Token JWT
         const token = localStorage.getItem('access_token');
         if (!token) {
           alert("Anda belum login. Silakan login terlebih dahulu.");
           window.location.href = "/templates/profile/profile.html";
->>>>>>> origin/BackEnd_v2
           return;
         }
 
         // 3. Kirim ke Backend
-<<<<<<< HEAD
-        const response = await fetch('/api/diagnosis', { // Sesuaikan prefix blueprint jika ada
-=======
         const response = await fetch('/api/diagnosis', {
->>>>>>> origin/BackEnd_v2
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -304,15 +207,8 @@
 
         const resultData = await response.json();
 
-<<<<<<< HEAD
-        // 4. Simpan Hasil ke LocalStorage
-        localStorage.setItem('hasil_diagnosa', JSON.stringify(resultData));
-
-        // 5. Redirect ke Halaman Hasil
-=======
         // 4. Simpan Hasil & Redirect
         localStorage.setItem('hasil_diagnosa', JSON.stringify(resultData));
->>>>>>> origin/BackEnd_v2
         window.location.href = "/diagnosis/hasil";
 
       } catch (error) {
@@ -324,8 +220,4 @@
 
 </body>
 
-<<<<<<< HEAD
 </html>
-=======
-</html>
->>>>>>> origin/BackEnd_v2
