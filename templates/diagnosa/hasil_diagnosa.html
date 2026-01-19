@@ -12,6 +12,7 @@
 
 <body>
 
+<<<<<<< HEAD
     <!-- NAVBAR -->
     <nav class="navbar navbar-expand-lg navbar-dark custom-navbar px-4">
         <a class="navbar-brand fw-bold" href="#">
@@ -25,6 +26,16 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url_for('diagnosis.result_page' ) }}">Hasil Diagnosa</a>
+=======
+    <nav class="navbar navbar-expand-lg navbar-dark custom-navbar px-4">
+        <a class="navbar-brand fw-bold" href="/">
+            <img src="/static/asset/img/pws.png" alt="StayHealthy" class="logo-img">
+        </a>
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav ms-auto me-4 gap-4">
+                <li class="nav-item">
+                    <a class="nav-link active" href="/">Home</a>
+>>>>>>> origin/BackEnd_v2
                 </li>
             </ul>
         </div>
@@ -32,6 +43,7 @@
 
     <div class="hero-strip"></div>
 
+<<<<<<< HEAD
     <!-- CONTENT -->
     <div class="container my-5">
         <div class="row">
@@ -49,6 +61,31 @@
                         <li class="list-group-item">Dyskinetic: <strong>25%</strong></li>
                         <li class="list-group-item">Ataxia: <strong>20%</strong></li>
                         <li class="list-group-item">Mixed: <strong>10%</strong></li>
+=======
+    <div class="container my-5">
+        <div class="row">
+            <div class="col-md-7">
+                <div class="card shadow p-4 h-100">
+                    <h4 class="result-title mb-3 text-center">Hasil Analisa Sistem</h4>
+                    <div class="chart-wrapper d-flex justify-content-center" style="position: relative; height:300px;">
+                        <canvas id="cpChart"></canvas>
+                    </div>
+                    <hr>
+                    <h5 class="mt-3">Rincian Probabilitas</h5>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item d-flex justify-content-between">
+                            <span>Spastic CP (Kaku)</span> <strong id="valP01">0%</strong>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between">
+                            <span>Dyskinetic CP (Gerak Tak Terkontrol)</span> <strong id="valP02">0%</strong>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between">
+                            <span>Ataxic CP (Keseimbangan)</span> <strong id="valP03">0%</strong>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between">
+                            <span>Mixed CP (Campuran)</span> <strong id="valP04">0%</strong>
+                        </li>
+>>>>>>> origin/BackEnd_v2
                     </ul>
                 </div>
             </div>
@@ -79,6 +116,7 @@
             </div>
         </div>
     </div>
+<<<<<<< HEAD
     </div>
     </div>
 
@@ -91,17 +129,33 @@
     </footer>
 
    <script>
+=======
+
+    <footer class="footer text-center mt-5 py-4 border-top">
+        <small class="text-muted">
+            Copyright © 2026 StayHealthy. All rights reserved.<br>
+        </small>
+    </footer>
+
+    <script>
+>>>>>>> origin/BackEnd_v2
     document.addEventListener("DOMContentLoaded", function () {
         // 1. Ambil data dari LocalStorage
         const storedData = localStorage.getItem('hasil_diagnosa');
 
         if (!storedData) {
+<<<<<<< HEAD
             alert("Data diagnosa tidak ditemukan.");
             window.location.href = "/diagnosa";
+=======
+            alert("Data diagnosa tidak ditemukan. Anda akan diarahkan kembali.");
+            window.location.href = "/diagnosa"; // Sesuaikan URL diagnosa Anda
+>>>>>>> origin/BackEnd_v2
             return;
         }
 
         const result = JSON.parse(storedData);
+<<<<<<< HEAD
         console.log("Data Backend Diterima:", result); // Akan muncul {"P1":36, "P2":0, ...}
 
         // 2. Pemetaan Data (MENYESUAIKAN KEY P1, P2, P3, P4)
@@ -138,16 +192,123 @@
                     datasets: [{
                         data: [dataCP.spastic, dataCP.dyskinetic, dataCP.ataxia, dataCP.mixed],
                         backgroundColor: ['#ff6fae', '#ff9fc9', '#ffc1dc', '#ffdbe9']
+=======
+        
+        // 2. Format Data ke Angka Bulat
+        const dataCP = {
+            P1: Math.round(result.P1 || 0), // Spastic
+            P2: Math.round(result.P2 || 0), // Dyskinetic
+            P3: Math.round(result.P3 || 0), // Ataxia
+            P4: Math.round(result.P4 || 0)  // Mixed
+        };
+
+        // 3. Update List Angka di Kiri
+        document.getElementById('valP01').innerText = dataCP.P1 + '%';
+        document.getElementById('valP02').innerText = dataCP.P2 + '%';
+        document.getElementById('valP03').innerText = dataCP.P3 + '%';
+        document.getElementById('valP04').innerText = dataCP.P4 + '%';
+
+        // 4. LOGIKA PENENTUAN HASIL TERTINGGI (DOMINAN)
+        // Mencari key (P1..P4) dengan nilai value tertinggi
+        const dominantKey = Object.keys(dataCP).reduce((a, b) => dataCP[a] > dataCP[b] ? a : b);
+        const highestScore = dataCP[dominantKey];
+
+        // 5. KAMUS INFORMASI PENYAKIT (DATA BASE TEKS)
+        const contentDatabase = {
+            "P1": {
+                title: "Spastic Cerebral Palsy",
+                desc: "Tipe ini adalah yang paling umum. Penderita mengalami kekakuan otot (hipertonia) yang menyebabkan gerakan menjadi kaku dan tersentak-sentak. Hal ini terjadi karena kerusakan pada korteks motorik otak.",
+                advice: [
+                    "Lakukan peregangan (stretching) otot secara rutin untuk mengurangi kekakuan.",
+                    "Gunakan alat bantu jalan (orthosis) jika disarankan dokter untuk mencegah deformitas tulang.",
+                    "Fisioterapi rutin sangat dianjurkan untuk melatih jangkauan gerak sendi."
+                ]
+            },
+            "P2": {
+                title: "Dyskinetic Cerebral Palsy",
+                desc: "Tipe ini ditandai dengan gerakan yang tidak terkontrol, lambat, atau menggeliat (athetosis). Penderita sering kesulitan mengontrol otot untuk duduk, berdiri, atau berbicara.",
+                advice: [
+                    "Latihan postur tubuh untuk membantu stabilitas saat duduk atau berdiri.",
+                    "Terapi wicara mungkin diperlukan jika otot wajah dan lidah terpengaruh.",
+                    "Hindari stres atau kegembiraan berlebih karena emosi kuat dapat memicu gerakan tak terkontrol menjadi lebih buruk."
+                ]
+            },
+            "P3": {
+                title: "Ataxic Cerebral Palsy",
+                desc: "Tipe ini memengaruhi keseimbangan dan koordinasi. Penderita mungkin tampak goyah saat berjalan, sering jatuh, atau kesulitan melakukan gerakan presisi seperti menulis atau memegang sendok.",
+                advice: [
+                    "Latihan keseimbangan menggunakan bola terapi atau berjalan di garis lurus.",
+                    "Gunakan alat pelindung diri (seperti helm atau pelindung lutut) untuk mencegah cedera akibat jatuh.",
+                    "Latihan koordinasi mata dan tangan melalui permainan menyusun balok atau memasukkan benda."
+                ]
+            },
+            "P4": {
+                title: "Mixed Cerebral Palsy",
+                desc: "Tipe Campuran terjadi ketika kerusakan otak tersebar di beberapa area, sehingga penderita menunjukkan gejala gabungan dari dua atau lebih tipe CP (biasanya kombinasi Spastic dan Dyskinetic).",
+                advice: [
+                    "Penanganan harus bersifat menyeluruh (holistik) mencakup fisioterapi, terapi okupasi, dan wicara.",
+                    "Konsultasikan prioritas penanganan dengan dokter (apakah fokus pada kekakuan atau gerakan tak terkontrol dulu).",
+                    "Pemberian nutrisi yang cukup sangat penting karena kebutuhan energi mungkin lebih tinggi."
+                ]
+            }
+        };
+
+        // 6. UPDATE TEKS DI BAGIAN KANAN
+        const info = contentDatabase[dominantKey];
+        
+        // Jika skor tertinggi 0 (tidak ada gejala), tampilkan pesan sehat
+        if (highestScore === 0) {
+            document.getElementById('infoTitle').innerText = "Tidak Terindikasi CP";
+            document.getElementById('infoTitle').className = "text-success fw-bold mb-3";
+            document.getElementById('infoDesc').innerText = "Berdasarkan jawaban Anda, tidak ditemukan indikasi gejala Cerebral Palsy yang signifikan.";
+            document.getElementById('infoAdvice').innerHTML = "<p class='text-muted'>Tetap pantau tumbuh kembang anak dan konsultasikan ke posyandu atau dokter anak secara berkala.</p>";
+        } else {
+            // Tampilkan Data Penyakit
+            document.getElementById('infoTitle').innerText = info.title + ` (${highestScore}%)`;
+            document.getElementById('infoDesc').innerText = info.desc;
+
+            // Render List Saran
+            let adviceHTML = "<ul class='ps-3 mb-0'>";
+            info.advice.forEach(item => {
+                adviceHTML += `<li class='mb-2'>${item}</li>`;
+            });
+            adviceHTML += "</ul>";
+            document.getElementById('infoAdvice').innerHTML = adviceHTML;
+        }
+
+        // 7. Render Chart
+        const ctx = document.getElementById('cpChart');
+        if (ctx) {
+            new Chart(ctx, {
+                type: 'doughnut', // Ganti ke doughnut agar lebih modern
+                data: {
+                    labels: ['Spastic', 'Dyskinetic', 'Ataxia', 'Mixed'],
+                    datasets: [{
+                        data: [dataCP.P1, dataCP.P2, dataCP.P3, dataCP.P4],
+                        backgroundColor: ['#ff6fae', '#ff9fc9', '#ffc1dc', '#ffdbe9'],
+                        borderWidth: 2,
+                        borderColor: '#ffffff'
+>>>>>>> origin/BackEnd_v2
                     }]
                 },
                 options: {
                     responsive: true,
+<<<<<<< HEAD
                     plugins: {
                         legend: { position: 'bottom' },
                         datalabels: {
                             color: '#3b2b44',
                             font: { weight: 'bold', size: 14 },
                             formatter: (value) => value > 0 ? value + '%' : ''
+=======
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'bottom', labels: { usePointStyle: true } },
+                        datalabels: {
+                            color: '#3b2b44',
+                            font: { weight: 'bold', size: 12 },
+                            formatter: (value) => value > 5 ? value + '%' : '' // Hanya tampilkan jika > 5%
+>>>>>>> origin/BackEnd_v2
                         }
                     }
                 },
@@ -155,8 +316,14 @@
             });
         }
     });
+<<<<<<< HEAD
 </script>
 
 </body>
 
+=======
+    </script>
+
+</body>
+>>>>>>> origin/BackEnd_v2
 </html>

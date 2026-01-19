@@ -14,6 +14,7 @@
 </head>
 
 <body>
+<<<<<<< HEAD
   <!-- ================= NAVBAR ================= -->
   <nav class="navbar navbar-expand-lg navbar-custom px-4">
     <a class="navbar-brand d-flex align-items-center" href="#">
@@ -28,6 +29,50 @@
         </li>
       </ul>
       <a href="{{ url_for('auth.profile_page') }}" class="btn btn-login">Login</a>
+=======
+  <nav class="navbar navbar-expand-lg navbar-dark custom-navbar px-4">
+    <a class="navbar-brand fw-bold" href="{{ url_for('index') }}">
+      <img src="/static/asset/img/pws.png" alt="StayHealthy" class="logo-img">
+    </a>
+
+    <div class="collapse navbar-collapse">
+      <ul class="navbar-nav ms-auto me-4 gap-4">
+        <li class="nav-item">
+          <a class="nav-link active" href="{{ url_for('index') }}">Home</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="dropdown">
+      <a href="#" role="button" class="d-flex align-items-center text-decoration-none dropdown-toggle" id="dropdownUser"
+        data-bs-toggle="dropdown" aria-expanded="false">
+
+        <img src="{{ url_for('static', filename=session.get('profile_pic') or 'asset/img/dummy-pic.png') }}"
+          class="rounded-circle" width="40" height="40">
+      </a>
+
+      <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownUser">
+        <li class="dropdown-header text-center">
+          {{ session['username'] }}
+        </li>
+
+        <li>
+          <a class="dropdown-item" href="{{ url_for('auth.profile_page') }}">
+            Profile
+          </a>
+        </li>
+
+        <li>
+          <hr class="dropdown-divider">
+        </li>
+
+        <li>
+          <a class="dropdown-item text-danger" href="{{ url_for('auth.logout') }}">
+            Logout
+          </a>
+        </li>
+      </ul>
+>>>>>>> origin/BackEnd_v2
     </div>
   </nav>
 
@@ -35,17 +80,24 @@
 
   <div class="container my-4" id="app"></div>
 
+<<<<<<< HEAD
   <!-- ================= FOOTER ================= -->
+=======
+>>>>>>> origin/BackEnd_v2
   <footer>
     Copyright © 2026 StayHealthy. All rights reserved.<br />
     Terms of Use | Privacy Policy | Cookie Policy
   </footer>
 
+<<<<<<< HEAD
   <!-- ================= JAVASCRIPT ================= -->
   <!-- ================= DATASET DARI BACKEND ================= -->
   <script>
     // Ini Bukan Error... Tetapi kode flask yang tidak bisa terbaca oleh JavaScript
     // Tetapi ini bisa jalan dengan normal
+=======
+  <script>
+>>>>>>> origin/BackEnd_v2
     const pertanyaan = {{ gejala | tojson }};
   </script>
 
@@ -69,11 +121,18 @@
         let nilai = jawaban[no] ?? 0;
         let percent = nilai * 100;
 
+<<<<<<< HEAD
+=======
+        // Cek apakah gejala ini sedang dipilih (nilai > 0)
+        let isActive = nilai > 0;
+
+>>>>>>> origin/BackEnd_v2
         app.innerHTML += `
     <div class="question-box">
       <p class="question-title">Pertanyaan ${no}</p>
       <p>${pertanyaan[i]["Nama Gejala"]}</p>
 
+<<<<<<< HEAD
       <button class="btn btn-answer me-2" onclick="jawabYa(${no})">Ya</button>
       <button class="btn btn-answer" onclick="jawabTidak(${no})">Tidak</button>
 
@@ -85,6 +144,20 @@
           style="background: linear-gradient(to right,#0d6efd ${percent}%,#e0e0e0 ${percent}%)"
           oninput="updateRange(${no}, this)">
         <p>Nilai: <span id="nilai-${no}">${nilai}</span></p>
+=======
+      <button class="btn ${isActive ? 'btn-secondary' : 'btn-answer'}" onclick="toggleGejala(${no})">
+        ${isActive ? 'Batalkan' : 'Ya'}
+      </button>
+
+      <div id="range-${no}" class="mt-3 ${isActive ? "" : "d-none"}">
+        <input type="range" 
+          class="form-range custom-range" 
+          min="0" max="1" step="0.1" 
+          value="${nilai}"
+          style="background: linear-gradient(to right,#0d6efd ${percent}%,#e0e0e0 ${percent}%)"
+          oninput="updateRange(${no}, this)">
+        <p>Tingkat Keyakinan: <span id="nilai-${no}">${nilai}</span></p>
+>>>>>>> origin/BackEnd_v2
       </div>
     </div>`;
       }
@@ -100,6 +173,7 @@
       </div>`;
     }
 
+<<<<<<< HEAD
     function jawabYa(no) {
       document.getElementById(`range-${no}`).classList.remove("d-none");
     }
@@ -108,31 +182,67 @@
       document.getElementById(`range-${no}`).classList.add("d-none");
       jawaban[no] = 0;
       document.getElementById(`nilai-${no}`).innerText = 0;
+=======
+    // Fungsi baru untuk menggantikan jawabYa dan jawabTidak
+    function toggleGejala(no) {
+      let currentVal = jawaban[no] ?? 0;
+
+      if (currentVal > 0) {
+        // Jika sudah aktif, matikan (sama seperti logika tombol Tidak)
+        jawaban[no] = 0;
+      } else {
+        // Jika belum aktif, aktifkan dengan nilai default 0.1 (agar slider terlihat ada isi sedikit)
+        // Atau bisa set 0.5 sesuai preferensi default keyakinan
+        jawaban[no] = 0.1;
+      }
+      
+      // Render ulang untuk memperbarui tampilan tombol (Ya <-> Batal) dan visibility slider
+      render();
+>>>>>>> origin/BackEnd_v2
     }
 
     function updateRange(no, slider) {
       let percent = slider.value * 100;
       slider.style.background = `linear-gradient(to right,#0d6efd ${percent}%,#e0e0e0 ${percent}%)`;
+<<<<<<< HEAD
       jawaban[no] = slider.value;
+=======
+      jawaban[no] = parseFloat(slider.value);
+>>>>>>> origin/BackEnd_v2
       document.getElementById(`nilai-${no}`).innerText = slider.value;
     }
 
     function nextStep() {
       currentStep++;
       render();
+<<<<<<< HEAD
       window.scrollTo({ top: 0, behavior: "smooth" });
+=======
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+>>>>>>> origin/BackEnd_v2
     }
 
     function prevStep() {
       currentStep--;
       render();
+<<<<<<< HEAD
       window.scrollTo({ top: 0, behavior: "smooth" });
+=======
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+>>>>>>> origin/BackEnd_v2
     }
 
     render();
 
     async function kirimDiagnosis() {
       // 1. Siapkan Data
+<<<<<<< HEAD
       // Kita perlu memetakan jawaban (index) ke Kode Gejala yang dimengerti backend
       let payload = {};
 
@@ -146,20 +256,40 @@
         // Jika tidak ada, gunakan item['Nama Gejala'] atau ID lainnya
         let kode = item['Kode Gejala'] || item['Kode'] || `G${no}`;
 
+=======
+      let payload = {};
+
+      pertanyaan.forEach((item, index) => {
+        let no = index + 1;
+        let nilai = jawaban[no] ? parseFloat(jawaban[no]) : 0.0;
+        let kode = item['Kode Gejala'] || item['Kode'] || `G${no}`; // Sesuaikan dengan key di DB/Excel
+>>>>>>> origin/BackEnd_v2
         payload[kode] = nilai;
       });
 
       try {
+<<<<<<< HEAD
         // 2. Ambil Token JWT (Asumsi token disimpan di localStorage saat Login)
         const token = localStorage.getItem('access_token');
         if (!token) {
           alert("Anda belum login. Silakan login terlebih dahulu.");
           window.location.href = "/templates/profile/profile.html"; // Redirect ke login
+=======
+        // 2. Ambil Token JWT
+        const token = localStorage.getItem('access_token');
+        if (!token) {
+          alert("Anda belum login. Silakan login terlebih dahulu.");
+          window.location.href = "/templates/profile/profile.html";
+>>>>>>> origin/BackEnd_v2
           return;
         }
 
         // 3. Kirim ke Backend
+<<<<<<< HEAD
         const response = await fetch('/api/diagnosis', { // Sesuaikan prefix blueprint jika ada
+=======
+        const response = await fetch('/api/diagnosis', {
+>>>>>>> origin/BackEnd_v2
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -174,10 +304,15 @@
 
         const resultData = await response.json();
 
+<<<<<<< HEAD
         // 4. Simpan Hasil ke LocalStorage
         localStorage.setItem('hasil_diagnosa', JSON.stringify(resultData));
 
         // 5. Redirect ke Halaman Hasil
+=======
+        // 4. Simpan Hasil & Redirect
+        localStorage.setItem('hasil_diagnosa', JSON.stringify(resultData));
+>>>>>>> origin/BackEnd_v2
         window.location.href = "/diagnosis/hasil";
 
       } catch (error) {
@@ -189,4 +324,8 @@
 
 </body>
 
+<<<<<<< HEAD
 </html>
+=======
+</html>
+>>>>>>> origin/BackEnd_v2
