@@ -1,6 +1,6 @@
 # 🏥 Pengembangan Web Service Untuk Deteksi Dini Penyakit
 
-![API](https://img.shields.io/badge/API-Online-brightgreen) ![Flask](https://img.shields.io/badge/Flask-2.3.x-blue) ![Python](https://img.shields.io/badge/Python-3.8%2B-blue) ![MySQL](https://img.shields.io/badge/MySQL-8.0-orange) ![JWT](https://img.shields.io/badge/JWT-Auth-green) ![Fuzzy Logic](https://img.shields.io/badge/Fuzzy-Logic-yellowgreen) ![License](https://img.shields.io/badge/License-MIT-yellow)
+![API](https://img.shields.io/badge/API-Online-brightgreen) ![Flask](https://img.shields.io/badge/Flask-2.3.x-blue) ![Python](https://img.shields.io/badge/Python-3.8%2B-blue) ![MySQL](https://img.shields.io/badge/MySQL-8.0-orange) ![JWT](https://img.shields.io/badge/JWT-Auth-green) ![Fuzzy Logic](https://img.shields.io/badge/Fuzzy-Logic-yellowgreen)
 
 REST API untuk sistem deteksi dini penyakit menggunakan metode fuzzy logic dan certainty factor dengan autentikasi JWT
 
@@ -20,7 +20,6 @@ REST API untuk sistem deteksi dini penyakit menggunakan metode fuzzy logic dan c
 - [Struktur Proyek](#struktur-proyek)
 - [Dokumentasi API](#dokumentasi-api)
 - [Kontribusi](#kontribusi)
-- [Lisensi](#lisensi)
 
 ---
 
@@ -230,9 +229,3 @@ Kontribusi sangat diterima! Berikut cara berkontribusi:
 3. Commit perubahan Anda (`git commit -m 'Add some AmazingFeature'`)
 4. Push ke branch (`git push origin feature/AmazingFeature`)
 5. Buat Pull Request
-
----
-
-## 📝 Lisensi
-
-Proyek ini dilisensikan di bawah **MIT License** - lihat file [LICENSE](LICENSE) untuk detail.
